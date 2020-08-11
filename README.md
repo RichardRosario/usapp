@@ -12,3 +12,5 @@
 4. created Auth folder to house our register/login components
 5. created routes to /,login,register
 6. created public folder to house our index.html
+7. update package dependency vulnerability
+8. installed semantic-ui-react

@@ -11,14 +11,14 @@ import {
 import { Link } from "react-router-dom";
 
 class Register extends React.Component {
-  state = [];
+  state = {};
 
   handleChange = () => {};
 
   render() {
     return (
-      <Grid textAlign="center" verticalAlign="middle">
-        <Grid.Column style={{ maxWwidth: 450 }}>
+      <Grid textAlign="center" verticalAlign="middle" className="app">
+        <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" icon color="orange" textAlign="center">
             <Icon name="puzzle piece" color="orange" />
             Register with Usapp!
