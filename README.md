@@ -14,3 +14,5 @@
 6. created public folder to house our index.html
 7. update package dependency vulnerability
 8. installed semantic-ui-react
+9. setup firebase account and enable signup with email
+10. register our first user with our register form, save data to firebase
