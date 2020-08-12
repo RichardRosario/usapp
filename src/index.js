@@ -14,19 +14,29 @@ import {
 } from "react-router-dom";
 import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
+import { createStore } from "redux";
+import { Provider, connect } from "react-redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import rootReducer from "./reducers/indexReducer";
+import { setUser } from "./actions/index";
+import Spinner from "./Spinner";
+
+const store = createStore(rootReducer, composeWithDevTools());
 
 class Root extends React.Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       // check if user is authenticated
       if (user) {
-        // redirect if user is authenticated
+        this.props.setUser(user); // redirect if user is authenticated
         this.props.history.push("/");
       }
     });
   }
   render() {
-    return (
+    return this.props.isLoading ? (
+      <Spinner />
+    ) : (
       <Switch>
         <Route path="/" exact component={App} />
         <Route path="/register" component={Register} />
@@ -36,12 +46,19 @@ class Root extends React.Component {
   }
 }
 
-const RootWithAuth = withRouter(Root);
+const mapStateFromProps = (state) => ({
+  isLoading: state.user.isLoading,
+});
+
+const RootWithAuth = withRouter(connect(mapStateFromProps, { setUser })(Root));
 
 ReactDOM.render(
-  <Router>
-    <RootWithAuth />
-  </Router>,
+  // provide global state
+  <Provider store={store}>
+    <Router>
+      <RootWithAuth />
+    </Router>
+  </Provider>,
   document.getElementById("root")
 );
 registerServiceWorker();
