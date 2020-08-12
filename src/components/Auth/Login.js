@@ -109,7 +109,7 @@ class Login extends React.Component {
             </Message>
           )}
           <Message>
-            Not yet a usapp user? <Link to="/register"> Register</Link>
+            Not yet a UsApp user? <Link to="/register"> Register</Link>
           </Message>
         </Grid.Column>
       </Grid>
