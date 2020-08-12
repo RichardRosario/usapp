@@ -219,7 +219,7 @@ class Register extends React.Component {
             </Message>
           )}
           <Message>
-            Already an UsApp user? <Link to="/login"> Login</Link>
+            Already a UsApp user? <Link to="/login"> Login</Link>
           </Message>
         </Grid.Column>
       </Grid>
