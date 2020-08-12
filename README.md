@@ -16,3 +16,4 @@
 8. installed semantic-ui-react
 9. setup firebase account and enable signup with email
 10. register our first user with our register form, save data to firebase
+11. Validate the forms submittion
