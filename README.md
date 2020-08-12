@@ -17,3 +17,5 @@
 9. setup firebase account and enable signup with email
 10. register our first user with our register form, save data to firebase
 11. Validate the forms submittion
+12. create firebase database
+13. handled user input errors

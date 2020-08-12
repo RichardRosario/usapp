@@ -54,6 +54,7 @@ class Login extends React.Component {
 
   isFormValid = ({ email, password }) => email && password;
 
+  // handle the user input errors
   handleInputError = (errors, inputName) => {
     return errors.some((error) =>
       error.message.toLowerCase().includes(inputName)

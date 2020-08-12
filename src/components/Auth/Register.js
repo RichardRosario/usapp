@@ -133,9 +133,10 @@ class Register extends React.Component {
       avatar: createdUser.user.photoURL,
     });
   };
+  // handle the input errors
   handleInputError = (errors, inputName) => {
     return errors.some((error) =>
-      error.message.toLowerCase().include(inputName)
+      error.message.toLowerCase().includes(inputName)
     )
       ? "error"
       : "";
