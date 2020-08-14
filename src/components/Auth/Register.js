@@ -157,6 +157,7 @@ class Register extends React.Component {
           <Header as="h2" icon color="orange" textAlign="center">
             <Icon name="discussions" color="orange" />
             Register with UsApp!
+            <Header as="h3">Your Team. Together!</Header>
           </Header>
           <Form onSubmit={this.handleSubmit} size="large">
             <Segment stacked>
@@ -219,7 +220,7 @@ class Register extends React.Component {
             </Message>
           )}
           <Message>
-            Already a UsApp user? <Link to="/login"> Login</Link>
+            Already an UsApp user? <Link to="/login"> Login</Link>
           </Message>
         </Grid.Column>
       </Grid>

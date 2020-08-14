@@ -73,6 +73,7 @@ class Login extends React.Component {
             <Icon name="discussions" color="orange" />
             Login to UsApp!
           </Header>
+          <Header as="h3">Ask. Stay in the loop. Share team updates!</Header>
           <Form onSubmit={this.handleSubmit} size="large">
             <Segment stacked>
               <Form.Input
@@ -109,7 +110,7 @@ class Login extends React.Component {
             </Message>
           )}
           <Message>
-            Not yet a UsApp user? <Link to="/register"> Register</Link>
+            Not yet an UsApp user? <Link to="/register"> Register</Link>
           </Message>
         </Grid.Column>
       </Grid>

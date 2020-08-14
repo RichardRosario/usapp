@@ -10,7 +10,7 @@ class SidePanel extends React.Component {
         inverted
         fixed="left"
         vertical
-        style={{ background: "#a600ff", fontSize: "1.2rem" }}
+        style={{ background: "#a600ff", fontSize: "1.2em" }}
       >
         <UserPanel />
       </Menu>
