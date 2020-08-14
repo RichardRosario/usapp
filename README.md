@@ -19,3 +19,5 @@
 11. Validate the forms submittion
 12. create firebase database
 13. handled user input errors
+14. implement redux to handle global state
+15. added index actions,types,reducers
