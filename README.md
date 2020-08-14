@@ -25,3 +25,4 @@
 17. clearing users data on logout
 18. pass redux state via props and add avatar to dropdown
 19. added channel component
+20. added modal for adding channels
