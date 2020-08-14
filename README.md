@@ -26,3 +26,5 @@
 18. pass redux state via props and add avatar to dropdown
 19. added channel component
 20. added modal for adding channels
+21. added function to create channel to firebase database
+22. create display of each channel by mapping through the channels
