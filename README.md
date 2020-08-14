@@ -21,3 +21,6 @@
 13. handled user input errors
 14. implement redux to handle global state
 15. added index actions,types,reducers
+16. added usapp chat skeleton
+17. clearing users data on logout
+18. pass redux state via props and add avatar to dropdown

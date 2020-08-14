@@ -1,26 +1,29 @@
-import React, { Component } from "react";
+import React from "react";
 import { Grid } from "semantic-ui-react";
 import "./App.css";
+import { connect } from "react-redux";
 import ColorPanel from "./ColorPanel/ColorPanel";
 import Messages from "./Messages/Messages";
 import SidePanel from "./SidePanel/SidePanel";
 import MetaPanel from "./MetaPanel/MetaPanel";
 
-class App extends Component {
-  render() {
-    return (
-      <Grid columns="equal" className="app" style={{ background: "#eee" }}>
-        <SidePanel />
-        <ColorPanel />
-        <Grid.Column style={{ marginLeft: 320 }}>
-          <Messages />
-        </Grid.Column>
-        <Grid.Column width={4}>
-          <MetaPanel />
-        </Grid.Column>
-      </Grid>
-    );
-  }
-}
+const App = ({ currentUser }) => {
+  return (
+    <Grid columns="equal" className="app" style={{ background: "#eee" }}>
+      <SidePanel currentUser={currentUser} />
+      <ColorPanel />
+      <Grid.Column style={{ marginLeft: 320 }}>
+        <Messages />
+      </Grid.Column>
+      <Grid.Column width={4}>
+        <MetaPanel />
+      </Grid.Column>
+    </Grid>
+  );
+};
 
-export default App;
+const mapStateToprops = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToprops)(App);
