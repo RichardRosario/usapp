@@ -24,3 +24,4 @@
 16. added usapp chat skeleton
 17. clearing users data on logout
 18. pass redux state via props and add avatar to dropdown
+19. added channel component
