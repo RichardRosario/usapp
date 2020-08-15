@@ -1,0 +1,19 @@
+Users
+ - ID
+ - Name
+ - Email
+ - Password Hash
+ - Profile Image
+
+Channel
+ - ID
+ - Name
+ - Description
+ - Created By
+ - Created At
+
+Messages
+ - ID
+ - Channel ID
+ - User ID
+ - Message
