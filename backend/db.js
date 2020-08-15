@@ -1,10 +1,7 @@
+'use strict';
+
 // Use MongoDB
 const mongo = require('mongodb');
-
-// Construct Database
-const dbClient = mongo.MongoClient;
-
-const dbUrl = 'mongodb://localhost:27017/usapp';
 
 class Db {
 
@@ -24,7 +21,7 @@ class Db {
     connect () {
 
         return this.client.connect(
-            dbUrl,
+            this.url,
 
             {
                 useNewUrlParser: true,
@@ -107,6 +104,43 @@ class Db {
 
     }
 
+    findAll (tableName) {
+        
+
+        return this.db.collection(tableName).find({}).toArray()
+            .catch(err => {throw err});
+
+    }
+
+    findOne (tableName, id) {
+        
+
+        return this.db.collection(tableName).findOne({id: id}).toArray()
+            .catch(err => {throw err});
+
+    }
+
+    insert (tableName, row) {
+
+        return this.db.collection(tableName).insertOne(row)
+            .catch(err => {throw err});
+
+    }
+
+    update (tableName, row, condition) {
+
+        return this.db.collection(tableName).updateOne(condition, {$set: row})
+            .catch(err => {throw err});
+
+    }
+
+    delete (tableName, condition) {
+
+        return this.db.collection(tableName).deleteOne(condition)
+            .catch(err => {throw err});
+
+    }
+
     close () {
 
         this.mongo.close();
@@ -118,6 +152,3 @@ class Db {
 module.exports = {
     Db: Db
 }
-
-// const database = new Db();
-    // database.connect();

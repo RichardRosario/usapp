@@ -1,203 +1,252 @@
+'use strict';
+
 // Require Built In Modules
 const https = require('https');
 const fs = require('fs');
 
 // Require Installed Modules
-const { Db } = require('./db');
 const express = require('express');
+const bodyParser = require("body-parser");
 
-// Connect to Database
-const usappDb = new Db('usapp');
-const DbConnect = usappDb.connect();
+const { Users } = require('./types/Users');
+const { Channels } = require('./types/Channels');
+const { Messages } = require('./types/Messages');
 
-// Start app only when we are connected to database
-DbConnect.then(_ => {
+class App {
 
-    const app = express();
-    const port = 3000;
+    #app;
+    #port;
+    #db;
 
-    const CreateRoutes = (tableName, _) => {
+    constructor () {
 
-        if(typeof _.list == 'function') {
-
-            app.get('/' + tableName, (req, res) => {
-                _.list(req, res)
-                    .then(_ => {
-                        usappDb.close();
-                    })
-                    .catch(_ => {
-                        usappDb.close();
-
-                        throw _;
-                    });
-            });
-
-        }
-
-        if(typeof _.get == 'function') {
-            app.get('/' + tableName + '/:id', (req, res) => {
-                _.get(req, res)
-                    .then(_ => {
-                        usappDb.close();
-                    })
-                    .catch(_ => {
-                        usappDb.close();
-
-                        throw _;
-                    });
-            });
-        }
-
-        if(typeof _.add == 'function') {
-            app.post('/' + tableName, (req, res) => {
-                _.add(req, res)
-                    .then(_ => {
-                        usappDb.close();
-                    })
-                    .catch(_ => {
-                        usappDb.close();
-
-                        throw _;
-                    });
-            });
-        }
-
-        if(typeof _.update == 'function') {
-            app.post('/' + tableName + '/:id', (req, res) => {
-                _.update(req, res)
-                    .then(_ => {
-                        usappDb.close();
-                    })
-                    .catch(_ => {
-                        usappDb.close();
-
-                        throw _;
-                    });
-            });
-        }
-
-        if(typeof _.delete == 'function') {
-            app.delete('/' + tableName + '/:id', (req, res) => {
-                _.delete(req, res)
-                    .then(_ => {
-                        usappDb.close();
-                    })
-                    .catch(_ => {
-                        usappDb.close();
-
-                        throw _;
-                    });
-            });
-        }
+        this.#app = express();
+        this.#port = 3001;
 
     }
 
-    CreateRoutes('users', {
+    static getInstance () {
 
-        list: (req, res) => {
+        let app = new App();
+            app.start();
 
-            res.send('List of Users');
+    }
 
-        },
+    start () {
 
-        get: (req, res) => {
+        this.createRoutes();
 
-            res.send('User Information');
+    }
 
-        },
+    async createRoutes () {
 
-        add: (req, res) => {
+        let app = this.#app;
+            app.use(bodyParser.urlencoded({ extended: false }));
+            app.use(bodyParser.json());
 
-            res.send('Add New User');
+        this.createRoutesForUsers();
 
-        },
+        this.createRoutesForChannels();
 
-        update: (req, res) => {
+        this.createRoutesForMessages();
 
-            res.send('Update User');
+        app.listen(this.#port, () => {
+    
+            console.log(`Listening at http://localhost:${this.#port}`)
+    
+        });
 
-        },
+    }
 
-        delete: (req, res) => {
+    createRoutesForUsers () {
 
-            res.send('Delete User');
+        let app = this.#app;
 
-        }
+        Users.createRoutes(app, async (req, res) => {
 
-    });
+            let type = req.method;
+            let params = req.params;
 
-    CreateRoutes('channels', {
+            let paramLength = Object.keys(params).length;
 
-        list: (req, res) => {
+            let Output;
 
-            res.send('List of Channels');
+            switch (type) {
 
-        },
+                case 'DELETE':
 
-        get: (req, res) => {
+                    Output = await Users.deleteUser(params.id);
 
-            res.send('Channel Information');
+                break;
 
-        },
+                case 'PUT':
 
-        add: (req, res) => {
+                    res.send('No such endpoint');
 
-            res.send('Add New Channel');
+                break;
 
-        },
+                case 'POST':
 
-        update: (req, res) => {
+                    if (paramLength) {
 
-            res.send('Update Channel');
+                        Output = await Users.updateUser(params.id, req.body);
 
-        },
+                    } else {
 
-        delete: (req, res) => {
+                        Output = await Users.addUser(req.body);
 
-            res.send('Delete Channel');
+                    }
 
-        }
+                break;
 
-    });
+                default:
 
-    CreateRoutes('messages', {
+                    if (paramLength) {
 
-        list: (req, res) => {
+                        Output = await Users.getUser(params.id);
 
-            res.send('List of Messages');
+                    } else {
 
-        },
+                        Output = await Users.getAllUsers();
 
-        get: (req, res) => {
+                    }
 
-            res.send('Message Information');
+            }
 
-        },
+            Output = JSON.stringify(Output);
 
-        add: (req, res) => {
+            res.send(Output);
 
-            res.send('Add New Message');
+        });
 
-        },
+    }
 
-        update: (req, res) => {
+    createRoutesForChannels () {
 
-            res.send('Update Message');
+        let app = this.#app;
 
-        },
+        Channels.createRoutes(app, async (req, res) => {
 
-        delete: (req, res) => {
+            let type = req.method;
+            let params = req.params;
 
-            res.send('Delete Message');
+            let paramLength = Object.keys(params).length;
 
-        }
+            let Output;
 
-    });
+            switch (type) {
 
-    app.listen(port, () => {
+                case 'DELETE':
 
-        console.log(`Example app listening at http://localhost:${port}`)
+                    Output = await Channels.deleteChannel(params.id);
 
-    });
+                break;
 
-});
+                case 'PUT':
+
+                    res.send('No such endpoint');
+
+                break;
+
+                case 'POST':
+
+                    if (paramLength) {
+
+                        Output = await Channels.updateChannel(params.id, req.body);
+
+                    } else {
+
+                        Output = await Channels.addChannel(req.body);
+
+                    }
+
+                break;
+
+                default:
+
+                    if (paramLength) {
+
+                        Output = await Channels.getChannel(params.id);
+
+                    } else {
+
+                        Output = await Channels.getAllChannels();
+
+                    }
+
+            }
+
+            Output = JSON.stringify(Output);
+
+            res.send(Output);
+
+        });
+
+    }
+
+    createRoutesForMessages () {
+
+        let app = this.#app;
+
+        Messages.createRoutes(app, async (req, res) => {
+
+            let type = req.method;
+            let params = req.params;
+
+            let paramLength = Object.keys(params).length;
+
+            let Output;
+
+            switch (type) {
+
+                case 'DELETE':
+
+                    Output = await Messages.deleteMessage(params.id);
+
+                break;
+
+                case 'PUT':
+
+                    res.send('No such endpoint');
+
+                break;
+
+                case 'POST':
+
+                    if (paramLength) {
+
+                        Output = await Messages.updateMessage(params.id, req.body);
+
+                    } else {
+
+                        Output = await Messages.addMessage(req.body);
+
+                    }
+
+                break;
+
+                default:
+
+                    if (paramLength) {
+
+                        Output = await Messages.getMessage(params.id);
+
+                    } else {
+
+                        Output = await Messages.getAllMessages();
+
+                    }
+
+            }
+
+            Output = JSON.stringify(Output);
+
+            res.send(Output);
+
+        });
+
+    }
+
+}
+
+App.getInstance();
