@@ -33,3 +33,4 @@
 25. Layout the colorpanel and messages components
 26. created firebase message database
 27. created the message from component to handle message submit
+28. displaying submitted messages

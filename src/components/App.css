@@ -21,3 +21,8 @@ body,
   right: 1em;
   z-index: 200;
 }
+/* message.js */
+.message__self {
+  border-left: 2px solid teal;
+  padding-left: 8px;
+}
