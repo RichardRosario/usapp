@@ -57,7 +57,7 @@ class MessageForm extends React.Component {
   };
 
   render() {
-    const { errors } = this.state;
+    const { errors, message, loading } = this.state;
     return (
       <Segment clearing>
         {/* Channel Search Input */}
@@ -65,6 +65,7 @@ class MessageForm extends React.Component {
         <Input
           fluid
           onChange={this.handleChange}
+          value={message}
           size="mini"
           style={{ marginBottom: "0.7em" }}
           name="message"
@@ -80,6 +81,7 @@ class MessageForm extends React.Component {
         <Button.Group>
           <Button
             onClick={this.sendMessage}
+            disabled={loading}
             color="orange"
             content="Add Reply"
             labelPosition="left"
