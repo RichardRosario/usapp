@@ -13,7 +13,7 @@ class SidePanel extends React.Component {
         inverted
         fixed="left"
         vertical
-        style={{ background: "#a600ff", fontSize: "1.2em" }}
+        style={{ background: "teal", fontSize: "1.2em" }}
       >
         <UserPanel currentUser={currentUser} />
         <Channels currentUser={currentUser} />

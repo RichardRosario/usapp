@@ -28,3 +28,9 @@
 20. added modal for adding channels
 21. added function to create channel to firebase database
 22. create display of each channel by mapping through the channels
+23. set channel on global state with reducer.
+24. set default channel on page load
+25. Layout the colorpanel and messages components
+26. created firebase message database
+27. created the message from component to handle message submit
+28. displaying submitted messages
