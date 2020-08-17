@@ -35,3 +35,4 @@
 27. created the message from component to handle message submit
 28. displaying submitted messages
 29. created file modal to upload file
+30. place media file in state and added mimetype
