@@ -1,6 +1,6 @@
 import React from "react";
 import { Segment, Comment } from "semantic-ui-react";
-import Messagesheader from "./MessagesHeader";
+import MessagesHeader from "./MessagesHeader";
 import MessageForm from "./MessageForm";
 import Message from "./Message";
 import firebase from "../../firebase";
@@ -35,7 +35,20 @@ class Messages extends React.Component {
         messages: loadedMessages,
         messageLoading: false,
       });
+      this.countUniqueUsers(loadedMessages);
     });
+  };
+
+  countUniqueUsers = (messages) => {
+    const uniqueUsers = messages.reduce((acc, message) => {
+      if (!acc.includes(message.user.name)) {
+        acc.push(message.user.name);
+      }
+      return acc;
+    }, []);
+    const plural = uniqueUsers.length > 1 || uniqueUsers.length === 0;
+    const numUniqueUsers = `${uniqueUsers.length} user${plural ? "s" : ""}`;
+    this.setState({ numUniqueUsers });
   };
 
   displayMessages = (messages) =>
@@ -48,11 +61,16 @@ class Messages extends React.Component {
       />
     ));
 
+  displayChannelName = (channel) => (channel ? `#${channel.name}` : "");
+
   render() {
-    const { messagesRef, messages, channel, user } = this.state;
+    const { messagesRef, messages, channel, user, numUniqueUsers } = this.state;
     return (
       <React.Fragment>
-        <Messagesheader />
+        <MessagesHeader
+          channelName={this.displayChannelName(channel)}
+          numUniqueUsers={numUniqueUsers}
+        />
 
         <Segment>
           <Comment.Group className="messages">
