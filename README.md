@@ -39,11 +39,11 @@
 
 ## Future ToDOS
 
-1. Sending direct message to other users
+1. Sending direct message to other users - checked
 2. new messages notification
 3. favorite channels
 4. displaying channel info
-5. changing and editig avatar
+5. changing and editing avatar
 6. display animation when user is typing
 7. add emoji picker
 8. securing UsApp
