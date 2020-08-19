@@ -119,11 +119,14 @@ class Messages extends React.Component {
               : this.displayMessages(messages)}
           </Comment.Group>
         </Segment>
-        <MessageForm
-          currentUser={user}
-          messagesRef={messagesRef}
-          currentChannel={channel}
-        />
+        <Segment>
+          {/* message form*/}
+          <MessageForm
+            currentUser={user}
+            messagesRef={messagesRef}
+            currentChannel={channel}
+          />
+        </Segment>
       </React.Fragment>
     );
   }

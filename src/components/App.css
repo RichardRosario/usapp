@@ -25,3 +25,7 @@ body,
   border-left: 2px solid teal;
   padding-left: 8px;
 }
+/* menu */
+.menu {
+  padding: 2em;
+}
