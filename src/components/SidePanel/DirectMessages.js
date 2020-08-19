@@ -1,14 +1,17 @@
 import React from "react";
 import { Menu, Icon } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { setCurrentChannel, setPrivateChannel } from "../../actions";
 import firebase from "../../firebase";
 
 class DirectMessages extends React.Component {
   state = {
     user: this.props.currentUser,
+    activeChannel: "",
     users: [],
     usersRef: firebase.database().ref("users"),
     presenceRef: firebase.database().ref("presence"),
-    connectedRef: "",
+    connectedRef: firebase.database().ref(".info/connected"),
   };
 
   componentDidMount() {
@@ -60,24 +63,60 @@ class DirectMessages extends React.Component {
     this.setState({ users: updatedUsers });
   };
 
+  isUserOnline = (user) => user.status === "online";
+
+  changeChannel = (user) => {
+    const channelId = this.getChannelId(user.uid);
+    const channelData = {
+      id: channelId,
+      name: user.name,
+    };
+    this.props.setCurrentChannel(channelData);
+    this.props.setPrivateChannel(true);
+    this.setActiveChannel(user.uid);
+  };
+
+  getChannelId = (userId) => {
+    const currentUserId = this.state.user.uid;
+    return userId < currentUserId
+      ? `${userId}/${currentUserId}`
+      : `${currentUserId}/${userId}`;
+  };
+
+  setActiveChannel = (userId) => {
+    this.setState({ activeChannel: userId });
+  };
+
   render() {
-    const { users } = this.state;
+    const { users, activeChannel } = this.state;
 
     return (
       <Menu.Menu className="menu">
         <Menu.Item>
           <span>
             <Icon name="mail" /> DIRECT MESSAGES
-          </span>
-          {users.length}
+          </span>{" "}
+          ({users.length})
         </Menu.Item>
-
         {users.map((user) => (
-          <Menu.Item></Menu.Item>
+          <Menu.Item
+            key={user.uid}
+            active={user.uid === activeChannel}
+            onClick={() => this.changeChannel(user)}
+            style={{ opacity: 0.7, fontStyle: "italic" }}
+          >
+            <Icon
+              name="circle"
+              color={this.isUserOnline(user) ? "green" : "red"}
+            />
+            @ {user.name}
+          </Menu.Item>
         ))}
       </Menu.Menu>
     );
   }
 }
 
-export default DirectMessages;
+export default connect(null, { setCurrentChannel, setPrivateChannel })(
+  DirectMessages
+);
