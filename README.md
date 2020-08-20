@@ -39,9 +39,9 @@
 
 ## Future ToDOS
 
-1. Sending direct message to other users - checked
-2. new messages notification - checked
-3. favorite channels
+1. Sending direct message to other users - done
+2. new messages notification - done
+3. favorite and starred channels - done
 4. displaying channel info
 5. changing and editing avatar
 6. display animation when user is typing

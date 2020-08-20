@@ -18,7 +18,7 @@ class SidePanel extends React.Component {
         style={{ background: "teal", fontSize: "1.2em" }}
       >
         <UserPanel currentUser={currentUser} />
-        <Starred />
+        <Starred currentUser={currentUser} />
         <Channels currentUser={currentUser} />
         <DirectMessages currentUser={currentUser} />
       </Menu>
