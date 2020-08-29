@@ -1,19 +1,21 @@
 Users - /users{/:id}
- - ID
- - Name
- - Email
- - Password Hash
- - Profile Image
+ - id
+ - name
+ - email
+ - password_hash
+ - profile_image
+ - online
 
 Channel - /channels{/:id}
- - ID
- - Name
- - Description
- - Created By
- - Created At
+ - id
+ - name
+ - description
+ - created_by
+ - created_at
 
 Messages - /messages{/:id}
- - ID
- - Channel ID
- - User ID
- - Message
+ - id
+ - id_channel
+ - id_user
+ - message
+ - unread
