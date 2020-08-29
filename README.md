@@ -34,3 +34,17 @@
 26. created firebase message database
 27. created the message from component to handle message submit
 28. displaying submitted messages
+29. created file modal to upload file
+30. place media file in state and added mimetype
+
+## Future ToDOS
+
+1. Sending direct message to other users - done
+2. new messages notification - done
+3. favorite and starred channels - done
+4. displaying channel info
+5. changing and editing avatar
+6. display animation when user is typing
+7. add emoji picker
+8. securing UsApp
+9. deploying UsApp with firebase tools

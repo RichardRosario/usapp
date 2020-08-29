@@ -1,19 +1,21 @@
-Users - http://localhost:3001/users{/:id}
- - ID
- - Name
- - Email
- - Password Hash
- - Profile Image
+Users - /users{/:id}
+ - id
+ - name
+ - email
+ - password_hash
+ - profile_image
+ - online
 
-Channel - http://localhost:3001/channels{/:id}
- - ID
- - Name
- - Description
- - Created By
- - Created At
+Channel - /channels{/:id}
+ - id
+ - name
+ - description
+ - created_by
+ - created_at
 
-Messages - http://localhost:3001/messages{/:id}
- - ID
- - Channel ID
- - User ID
- - Message
+Messages - /messages{/:id}
+ - id
+ - id_channel
+ - id_user
+ - message
+ - unread
