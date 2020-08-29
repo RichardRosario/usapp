@@ -64,14 +64,14 @@ class Users {
 
     }
 
-    static addUser (request) {
+    static addUser ({name, email, password, profile_image = '', online = false} = request) {
 
         return new Promise(resolve => {
 
             Mongo.connect()
                 .then(_ => {
 
-                Mongo.insert(tableName, request)
+                Mongo.insert(tableName, {name: name, email: email, password: password, profile_image: profile_image, online: online})
 
                     .then(res => {
                         resolve(res);
@@ -85,14 +85,37 @@ class Users {
 
     }
 
-    static updateUser (id, request) {
+    static updateUser (id, {name = '', email = '', password = '', profile_image = '', online = false} = request) {
+
+        let fields = {};
+
+        if (name)
+            fields.name = name;
+
+        if (email)
+            fields.email = email;
+
+        if (password)
+            fields.password = password;
+
+        if (profile_image)
+            fields.profile_image = profile_image;
+
+        if (online)
+            fields.online = online;
 
         return new Promise(resolve => {
+
+            if (Object.keys(fields).length <= 0){
+                resolve({error: 'No field to update'});
+
+                return false;
+            }
 
             Mongo.connect()
                 .then(_ => {
 
-                Mongo.update(tableName, request, {id: id})
+                Mongo.update(tableName, fields, {id: id})
 
                     .then(res => {
                         resolve(res);

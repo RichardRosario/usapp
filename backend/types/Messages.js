@@ -64,14 +64,14 @@ class Messages {
 
     }
 
-    static addMessage (request) {
+    static addMessage ({id_channel, id_user, message = '', unread = 1} = request) {
 
         return new Promise(resolve => {
 
             Mongo.connect()
                 .then(_ => {
 
-                Mongo.insert(tableName, request)
+                Mongo.insert(tableName, {id_channel: id_channel, id_user: id_user, message: message, unread: unread})
 
                     .then(res => {
                         resolve(res);
@@ -85,14 +85,14 @@ class Messages {
 
     }
 
-    static updateMessage (id, request) {
+    static updateMessage (id, {message = ''} = request) {
 
         return new Promise(resolve => {
 
             Mongo.connect()
                 .then(_ => {
 
-                Mongo.update(tableName, request, {id: id})
+                Mongo.update(tableName, {message: message}, {id: id})
 
                     .then(res => {
                         resolve(res);

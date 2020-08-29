@@ -64,14 +64,14 @@ class Channels {
 
     }
 
-    static addChannel (request) {
+    static addChannel ({name, description = '', created_by = '0000-00-00 00:00:00', created_at = '0000-00-00 00:00:00'} = request) {
 
         return new Promise(resolve => {
 
             Mongo.connect()
                 .then(_ => {
 
-                Mongo.insert(tableName, request)
+                Mongo.insert(tableName, {name: name, description: description, created_by: created_by, created_at: created_at})
 
                     .then(res => {
                         resolve(res);
@@ -85,14 +85,34 @@ class Channels {
 
     }
 
-    static updateChannel (id, request) {
+    static updateChannel (id, {name, description = '', created_by = '0000-00-00 00:00:00', created_at = '0000-00-00 00:00:00'} = request) {
+
+        let fields = {};
+
+        if (name)
+            fields.name = name;
+
+        if (description)
+            fields.description = description;
+
+        if (created_by)
+            fields.created_by = created_by;
+
+        if (created_at)
+            fields.created_at = created_at;
 
         return new Promise(resolve => {
+
+            if (Object.keys(fields).length <= 0){
+                resolve({error: 'No field to update'});
+
+                return false;
+            }
 
             Mongo.connect()
                 .then(_ => {
 
-                Mongo.update(tableName, request, {id: id})
+                Mongo.update(tableName, fields, {id: id})
 
                     .then(res => {
                         resolve(res);
